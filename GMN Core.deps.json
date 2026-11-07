@@ -237,7 +237,7 @@
         },
         "runtime": {
           "ZLR.VM.dll": {
-            "assemblyVersion": "0.9.0-pre-03",
+            "assemblyVersion": "0.9.0.0",
             "fileVersion": "0.9.0.0"
           }
         }

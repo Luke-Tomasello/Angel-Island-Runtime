@@ -1,54 +1,103 @@
-# Angel-Island-Run-Time
-This download is the pre-build server + support data and modules intended for 'download and run'
+# Angel Island Runtime
 
-# Angel-Island Core 6
-64bit, .NET 8 Ultima Online free Server for Angel-Island and Siege Perilous
+The **Angel Island** Ultima Online server, built and ready to run: download it, start it, and connect. It's the same
+server as the **[Angel Island Server](https://github.com/Luke-Tomasello/Angel-Island-Server)** source repository,
+built from scratch from it: each update here is tagged `svn-r<number>`, and the source tag with the same name is exactly
+what it was built from.
 
-# Launch Parameters
--uosp       // launch as Siege Perilous<br/>
--uoai       // launch as Angel Island<br/>
--uols       // launch as Login Server<br/>
--usedb      // use SQLite common user password database (shares across servers)<br/>
--nopatch    // don't run startup patcher (patches world files. not needed for fresh installations.)<br/>
--uotc       // launch as test center. May be combiled with -uosp or -uoai<br/>
+## What you need
 
-# Examples:
-"GMN Core 3.0.exe" -uosp -usedb -nopatch         // launch Siege Perilous<br/>
-"GMN Core 3.0.exe" -uoai -usedb -nopatch         // launch Angel Island<br/>
-"GMN Core 3.0.exe" -uosp -uotc -usedb -nopatch   // launch Siege Perilous Test Center<br/>
+- **Windows** and the **[.NET 8 Runtime](https://dotnet.microsoft.com/download/dotnet/8.0)** (to build the server
+  yourself, use the source repository and the .NET 8 SDK instead).
+- **Ultima Online client files.** The server finds them through the registry, or asks for the folder the first time.
+  Players connect with client **6.0.1.10**; other versions get a warning.
 
-# Basic Setup:
-If you are using the Login Server (recommended) the standard connection port: 2593 is used.<br/>
-If you wish to connect to the shards directly:<br/>
-AngelIslandPort = 3593<br/>
-TestCenterPort = 3594<br/>
-SiegePerilousPort = 3595<br/>
-LoginServerPort = 2593<br/>
+## Run
 
-Create folders for each server. Example: ShardAI, ShardSP, ShardTC, ShardLS<br/>
-Launch each of the servers, launch your client, and connect the the Login Server at port:2593<br/>
+Every shard is the same program, started with a flag. With no flag, it asks which one to run.
 
-# Administration:
-The first administrator account will be AccessLevel.Owner. This is one level above AccessLevel.Administrator
+| Flag | Shard | Port |
+|---|---|---|
+| `-uols` | Login server: players connect here and pick a shard | 2593 |
+| `-uoai` | Angel Island | 3593 |
+| `-uosp` | Siege Perilous (`-Siege1`, `-Siege2` for its variants) | 3594 |
+| `-uomo` | Mortalis | 3595 |
+| `-uose` | Seasons (`-Season1`, `-Season2`, ... for a season) | 3596 |
+| `-uoup` | Upheaval | 3597 |
+| `-uotc` | Test Center: add to a shard's flag to run it as its test center | 3602 |
+| `-uoev` | Event shard: add to a shard's flag to run it as an event shard | 3601 |
 
-# Optional Extras:
-The Angel Island Core uses a handshake with the ClassicUO and RazorCE to ensure the players use an approved client configuration.
-Both modified versions of ClassicUO and RazorCE are available here in their respective repos.
+The ports are in `Ports.json`. Other flags you may want:
 
-# World Files:
-You'll also find the completely spawned Angel Island and Siege Perilous worlds here.<br/>
-Angel Island is a customized OSI Publish 15 spawn.<br/>
-Siege Perilous is a fairly accurate OSI Publish 13.6 spawn.<br/>
-Both worlds contain the Custom Housing Preview area. This is an area where players can see and purchase any of our 56 Custom Houses. (you don't want to recreate this by hand.)<br/>
-I also left all Townships intact so that your new staff can see, evaluate, and understand how elaborate they can be (before deleting, and/or awarding them in some way.)<br/>
-Finally, these world files contain the complete collection of player-composed music with the Angel Island Music System. There are probably ~100 songs in the library. Note, AI & SP's music libraries likely differ.<br/>
-You can get a feel for the music system as well as many other features on my YouTube channel
-https://www.youtube.com/@UltimaOnlineFreeShard
+| Flag | What it does |
+|---|---|
+| `-usedb` | Share accounts and passwords between servers (a common SQLite database) |
+| `-nopatch` | Skip the startup patcher (one-time patches for existing worlds) |
 
-# Getting Started Videos
-https://youtu.be/0kauX-W5BLI <br/>
-https://youtu.be/8zNv5ryd6_U
+```
+"GMN Core.exe" -uols -usedb          the login server
+"GMN Core.exe" -uoai -usedb          Angel Island
+"GMN Core.exe" -uosp -uotc -usedb    Siege Perilous Test Center
+```
 
-# Discord
+To try one shard, start it and connect your client to its port. To run several, copy this folder once for each (for
+example `ShardAI`, `ShardSP`, `ShardLS`), start the login server and the shards, and connect your client to the login
+server on port 2593.
 
-https://discord.gg/GXcR2DsSnb
+## The first start
+
+- With no world yet, the server starts a new one: it creates `Saves\` and `Logs\` beside `GMN Core.exe`, runs its
+  one-time patches, and spawns the world. Messages about things a patch expected in an older world are normal on a new
+  one.
+- It offers to create the first account. That account is **Owner**, one level above Administrator.
+- Windows asks whether to let `GMN Core.exe` through the firewall: allow it, or players can't connect.
+
+## World files
+
+To start from our worlds instead of a new one, copy a world repository's `Saves` folder here (beside `GMN Core.exe`)
+before the first start. The server brings an older save up to date as it loads it.
+
+- [Angel Island World Files](https://github.com/Luke-Tomasello/Angel-Island-World-files): Angel Island as of July 2024,
+  a customized OSI Publish 15 spawn.
+- [Siege Perilous World Files](https://github.com/Luke-Tomasello/Siege-Perilous-World-Files): Siege Perilous as of July
+  2024, a faithful OSI Publish 13.6 spawn.
+
+Both include the Custom Housing Preview area (any of our 56 custom houses, to see and buy), every township, and the
+music library: about a hundred songs players composed with the music system.
+
+## Optional settings
+
+The server runs without any of these; each turns on a feature. They are Windows environment variables.
+
+| Variables | For |
+|---|---|
+| `AI.NOREPLY.ADDRESS`, `AI.NOREPLY.PASSWORD`, `AI.EMAIL.HOST`, `AI.EMAIL.HOST.PORT`, `AI.EMAIL.USER`, `AI.EMAIL.ACCOUNTING`, `AI.EMAIL.ANNOUNCEMENTS`, `AI.EMAIL.DEVNOTIFY`, `AI.EMAIL.DISTLIST.PASSWORD`, `AI.EMAIL.SHARDOWNER` | Email: account notices, announcements, crash reports |
+| `AI.MMAccountId`, `AI.MMlicenseKey` | GeoIP lookups with your own MaxMind account |
+| `AI.LOGINDB`, `AI.IPEXCEPTIONDB`, `AI.FIREWALLDB` | Where the shared databases live (`-usedb`) |
+| `AI.BuildInfoDir` | Where the build number file, `Core 6.info`, is kept (here, by default) |
+
+## The build number
+
+`Core 6.info` holds the build number the server reports at startup (`Version 6.1.xxxx, Build n`). This runtime counts its
+own builds, one per update, starting from 1: it isn't Angel Island's live build number, and a server you build yourself
+counts its own.
+
+## Related
+
+- [Angel Island Server](https://github.com/Luke-Tomasello/Angel-Island-Server): the source
+- [Angel Island Music System](https://github.com/Luke-Tomasello/Angel-Island-Music-System): the music system, as a
+  drop-in for RunUO servers
+- [ClassicUO, Angel Island version](https://github.com/Luke-Tomasello/ClassicUO-Angel-Island-Version),
+  [RazorCE, Angel Island version](https://github.com/Luke-Tomasello/RazorCE-Angel-Island-Version) and the
+  [Common Shard Launcher](https://github.com/Luke-Tomasello/Common-Shard-Launcher): the clients the server checks for an
+  approved configuration
+- [Client map and music files](https://github.com/Luke-Tomasello/client-server-map-and-music-files)
+- YouTube: [Ultima Online Free Shard](https://www.youtube.com/@UltimaOnlineFreeShard); getting started:
+  [part 1](https://youtu.be/0kauX-W5BLI), [part 2](https://youtu.be/8zNv5ryd6_U)
+- Discord: [discord.gg/GXcR2DsSnb](https://discord.gg/GXcR2DsSnb)
+
+## License
+
+GPL (see `LICENSE`). The source is the Angel Island Server repository, at the tag with this update's name. Angel Island
+is built on RunUO, by the RunUO Software Team, and on twenty years of work by Angel Island's developers, staff and
+players.
