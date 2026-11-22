@@ -24,6 +24,7 @@ Every shard is the same program, started with a flag. With no flag, it asks whic
 | `-uomo` | Mortalis | 3595 |
 | `-uose` | Seasons (`-Season1`, `-Season2`, ... for a season) | 3596 |
 | `-uoup` | Upheaval | 3597 |
+| `-uomc` | Music Conservatory: composing music | 3603 |
 | `-uotc` | Test Center: add to a shard's flag to run it as its test center | 3602 |
 | `-uoev` | Event shard: add to a shard's flag to run it as an event shard | 3601 |
 
@@ -31,18 +32,26 @@ The ports are in `Ports.json`. Other flags you may want:
 
 | Flag | What it does |
 |---|---|
-| `-usedb` | Share accounts and passwords between servers (a common SQLite database) |
 | `-nopatch` | Skip the startup patcher (one-time patches for existing worlds) |
 
 ```
-"GMN Core.exe" -uols -usedb          the login server
-"GMN Core.exe" -uoai -usedb          Angel Island
-"GMN Core.exe" -uosp -uotc -usedb    Siege Perilous Test Center
+"GMN Core.exe" -uols          the login server
+"GMN Core.exe" -uoai          Angel Island
+"GMN Core.exe" -uosp -uotc    Siege Perilous Test Center
 ```
 
 To try one shard, start it and connect your client to its port. To run several, copy this folder once for each (for
-example `ShardAI`, `ShardSP`, `ShardLS`), start the login server and the shards, and connect your client to the login
-server on port 2593.
+example `ShardAI`, `ShardSP`, `ShardLS`), set `AI.DBDIR` (below) so they share one databases folder, start the login
+server and the shards, and connect your client to the login server on port 2593.
+
+## Databases
+
+Accounts, character names, the music library and the firewall lists are SQLite databases in one folder: the one
+`AI.DBDIR` names (a Windows environment variable), else `Databases\` beside `GMN Core.exe`. One shard needs nothing.
+Several shards share accounts and names when they share the folder: set `AI.DBDIR` to it.
+
+`-usedb` and `-sharemusic` are retired (the databases are always on), as are `AI.LOGINDB`, `AI.MUSICDB`, `AI.NAMESDB`,
+`AI.IPEXCEPTIONDB` and `AI.FIREWALLDB`: a server given one stops and says what to do instead.
 
 ## The first start
 
@@ -73,7 +82,7 @@ The server runs without any of these; each turns on a feature. They are Windows 
 |---|---|
 | `AI.NOREPLY.ADDRESS`, `AI.NOREPLY.PASSWORD`, `AI.EMAIL.HOST`, `AI.EMAIL.HOST.PORT`, `AI.EMAIL.USER`, `AI.EMAIL.ACCOUNTING`, `AI.EMAIL.ANNOUNCEMENTS`, `AI.EMAIL.DEVNOTIFY`, `AI.EMAIL.DISTLIST.PASSWORD`, `AI.EMAIL.SHARDOWNER` | Email: account notices, announcements, crash reports |
 | `AI.MMAccountId`, `AI.MMlicenseKey` | GeoIP lookups with your own MaxMind account |
-| `AI.LOGINDB`, `AI.IPEXCEPTIONDB`, `AI.FIREWALLDB` | Where the shared databases live (`-usedb`) |
+| `AI.DBDIR` | The databases folder (see Databases) |
 
 ## The version
 
