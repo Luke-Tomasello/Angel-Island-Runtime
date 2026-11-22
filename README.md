@@ -74,13 +74,11 @@ The server runs without any of these; each turns on a feature. They are Windows 
 | `AI.NOREPLY.ADDRESS`, `AI.NOREPLY.PASSWORD`, `AI.EMAIL.HOST`, `AI.EMAIL.HOST.PORT`, `AI.EMAIL.USER`, `AI.EMAIL.ACCOUNTING`, `AI.EMAIL.ANNOUNCEMENTS`, `AI.EMAIL.DEVNOTIFY`, `AI.EMAIL.DISTLIST.PASSWORD`, `AI.EMAIL.SHARDOWNER` | Email: account notices, announcements, crash reports |
 | `AI.MMAccountId`, `AI.MMlicenseKey` | GeoIP lookups with your own MaxMind account |
 | `AI.LOGINDB`, `AI.IPEXCEPTIONDB`, `AI.FIREWALLDB` | Where the shared databases live (`-usedb`) |
-| `AI.BuildInfoDir` | Where the build number file, `Core 6.info`, is kept (here, by default) |
 
-## The build number
+## The version
 
-`Core 6.info` holds the build number the server reports at startup (`Version 6.1.xxxx, Build n`). This runtime counts its
-own builds, one per update, starting from 1: it isn't Angel Island's live build number, and a server you build yourself
-counts its own.
+The server reports its version at startup: `Version 6.1.1360`. The last number is the revision of the source it was
+built from, the same as this runtime's tag (`svn-r1360`) and the Angel Island Server repository's.
 
 ## Related
 

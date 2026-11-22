@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v8.0": {
-      "Patches001_100/1.0.0": {
+      "Patches001_100/6.1.1431": {
         "runtime": {
           "Patches001_100.dll": {}
         }
@@ -234,8 +234,8 @@
         },
         "runtime": {
           "GMN Core.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
+            "assemblyVersion": "6.1.0.0",
+            "fileVersion": "6.1.1431.0"
           }
         }
       },
@@ -253,7 +253,7 @@
     }
   },
   "libraries": {
-    "Patches001_100/1.0.0": {
+    "Patches001_100/6.1.1431": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
