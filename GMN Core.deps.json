@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v8.0": {
-      "GMN Core/6.1.1431": {
+      "GMN Core/6.1.1448": {
         "dependencies": {
           "MaxMind.GeoIP2": "5.1.0",
           "Newtonsoft.Json": "13.0.3",
@@ -245,7 +245,7 @@
     }
   },
   "libraries": {
-    "GMN Core/6.1.1431": {
+    "GMN Core/6.1.1448": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
